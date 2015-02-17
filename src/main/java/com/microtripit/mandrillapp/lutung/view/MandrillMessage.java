@@ -21,6 +21,7 @@ public class MandrillMessage {
 	private String bcc_address, tracking_domain, signing_domain, 
 			return_path_domain;
 	private Boolean merge;
+	private String merge_language=null;
 	private List<MergeVar> global_merge_vars;
 	private List<MergeVarBucket> merge_vars;
 	private List<String> tags;
@@ -426,6 +427,19 @@ public class MandrillMessage {
 		this.merge_vars = mergeVars;
 	}
 
+	public String getMergeLanguage() {
+		return this.merge_language;
+	}
+
+	/**
+	 * @param mergeLanguage The per-template merge language, which overrides the
+	 * global merge language set in the Mandrill account. At the moment this
+	 * can be one of ('mailchimp', 'handlebars')
+	 */
+	public void setMergeLanguage(String mergeLanguage) {
+		this.merge_language = mergeLanguage;
+	}
+
 	/**
 	 * @return An array of string to tag the message with. Stats 
 	 * are accumulated using tags, though we only store the first 
@@ -731,7 +745,8 @@ public class MandrillMessage {
 	 * @since Mar 16, 2013
 	 */
 	public static class MergeVar {
-		private String name, content;
+		private String name;
+		private Object content;
 
 		/**
 		 * Construct a MergeVar.
@@ -744,7 +759,7 @@ public class MandrillMessage {
 		 * @param name The merge variable's name
 		 * @param content The merge variable's content.
 		 */
-		public MergeVar(final String name, final String content) {
+		public MergeVar(final String name, final Object content) {
 			this.name = name;
 			this.content = content;
 		}
@@ -768,17 +783,17 @@ public class MandrillMessage {
 		/**
 		 * @return The merge variable's content.
 		 */
-		public String getContent() {
-			return content;
+		public Object getContent() {
+			return this.content;
 		}
 		/**
 		 * @param content The merge variable's content.
 		 */
-		public void setContent(final String content) {
+		public void setContent(final Object content) {
 			this.content = content;
 		}
 	}
-	
+
 	/**
 	 * <p>Metadata for a single recipient</p>
 	 * @author rschreijer
