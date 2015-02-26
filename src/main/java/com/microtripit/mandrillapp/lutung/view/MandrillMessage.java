@@ -792,6 +792,12 @@ public class MandrillMessage {
 		public void setContent(final Object content) {
 			this.content = content;
 		}
+
+		@Override
+		public String toString() {
+			return "MergeVar {" + "name = " + name + ", content = " + content + '}';
+		}
+
 	}
 
 	/**
